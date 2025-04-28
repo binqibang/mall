@@ -54,9 +54,9 @@ public class AlipayController {
         response.getWriter().close();
     }
 
-    @ApiOperation(value = "支付宝异步回调",notes = "必须为POST请求，执行成功返回success，执行失败返回failure")
+    @ApiOperation(value = "支付宝异步回调", notes = "必须为POST请求，执行成功返回success，执行失败返回failure")
     @RequestMapping(value = "/notify", method = RequestMethod.POST)
-    public String notify(HttpServletRequest request){
+    public String notify(HttpServletRequest request) {
         Map<String, String> params = new HashMap<>();
         Map<String, String[]> requestParams = request.getParameterMap();
         for (String name : requestParams.keySet()) {
@@ -65,10 +65,10 @@ public class AlipayController {
         return alipayService.notify(params);
     }
 
-    @ApiOperation(value = "支付宝统一收单线下交易查询",notes = "订单支付成功返回交易状态：TRADE_SUCCESS")
+    @ApiOperation(value = "支付宝统一收单线下交易查询", notes = "订单支付成功返回交易状态：TRADE_SUCCESS")
     @RequestMapping(value = "/query", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<String> query(String outTradeNo, String tradeNo){
-        return CommonResult.success(alipayService.query(outTradeNo,tradeNo));
+    public CommonResult<String> query(String outTradeNo, String tradeNo) {
+        return CommonResult.success(alipayService.query(outTradeNo, tradeNo));
     }
 }

@@ -39,7 +39,7 @@ public class UmsMemberCouponController {
     @ResponseBody
     public CommonResult add(@PathVariable Long couponId) {
         memberCouponService.add(couponId);
-        return CommonResult.success(null,"领取成功");
+        return CommonResult.success(null, "领取成功");
     }
 
     @ApiOperation("获取会员优惠券历史列表")

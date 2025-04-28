@@ -31,7 +31,7 @@ public class ConfirmOrderResult {
 
     @Getter
     @Setter
-    public static class CalcAmount{
+    public static class CalcAmount {
         @ApiModelProperty("订单商品总金额")
         private BigDecimal totalAmount;
         @ApiModelProperty("运费")

@@ -23,6 +23,7 @@ public interface PortalOrderDao {
 
     /**
      * 获取超时订单
+     *
      * @param minute 超时时间（分）
      */
     List<OmsOrderDetail> getTimeOutOrders(@Param("minute") Integer minute);
@@ -30,7 +31,7 @@ public interface PortalOrderDao {
     /**
      * 批量修改订单状态
      */
-    int updateOrderStatus(@Param("ids") List<Long> ids,@Param("status") Integer status);
+    int updateOrderStatus(@Param("ids") List<Long> ids, @Param("status") Integer status);
 
     /**
      * 解除取消订单的库存锁定
@@ -40,15 +41,15 @@ public interface PortalOrderDao {
     /**
      * 根据商品的skuId来锁定库存
      */
-    int lockStockBySkuId(@Param("productSkuId")Long productSkuId,@Param("quantity") Integer quantity);
+    int lockStockBySkuId(@Param("productSkuId") Long productSkuId, @Param("quantity") Integer quantity);
 
     /**
      * 根据商品的skuId扣减真实库存
      */
-    int reduceSkuStock(@Param("productSkuId")Long productSkuId,@Param("quantity") Integer quantity);
+    int reduceSkuStock(@Param("productSkuId") Long productSkuId, @Param("quantity") Integer quantity);
 
     /**
      * 根据商品的skuId释放库存
      */
-    int releaseStockBySkuId(@Param("productSkuId")Long productSkuId,@Param("quantity") Integer quantity);
+    int releaseStockBySkuId(@Param("productSkuId") Long productSkuId, @Param("quantity") Integer quantity);
 }

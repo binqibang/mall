@@ -50,7 +50,7 @@ public class PmsPortalBrandController {
     public CommonResult<CommonPage<PmsProduct>> productList(@RequestParam Long brandId,
                                                             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                                             @RequestParam(value = "pageSize", defaultValue = "6") Integer pageSize) {
-        CommonPage<PmsProduct> result = portalBrandService.productList(brandId,pageNum, pageSize);
+        CommonPage<PmsProduct> result = portalBrandService.productList(brandId, pageNum, pageSize);
         return CommonResult.success(result);
     }
 }

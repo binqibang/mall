@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @Api(tags = "OmsPortalOrderReturnApplyController")
-@Tag(name = "OmsPortalOrderReturnApplyController",description = "退货申请管理")
+@Tag(name = "OmsPortalOrderReturnApplyController", description = "退货申请管理")
 @RequestMapping("/returnApply")
 public class OmsPortalOrderReturnApplyController {
     @Autowired

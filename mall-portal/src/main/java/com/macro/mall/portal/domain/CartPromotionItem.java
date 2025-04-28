@@ -13,7 +13,7 @@ import java.math.BigDecimal;
  */
 @Getter
 @Setter
-public class CartPromotionItem extends OmsCartItem{
+public class CartPromotionItem extends OmsCartItem {
     @ApiModelProperty("促销活动信息")
     private String promotionMessage;
     @ApiModelProperty("促销活动减去的金额，针对每个商品")
