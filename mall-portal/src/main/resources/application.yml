@@ -2,7 +2,7 @@ spring:
   application:
     name: mall-portal
   profiles:
-    active: dev #默认为开发环境
+    active: dev # 默认为开发环境
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -13,14 +13,15 @@ mybatis:
     - classpath*:com/**/mapper/*.xml
 
 jwt:
-  tokenHeader: Authorization #JWT存储的请求头
-  secret: mall-portal-secret #JWT加解密使用的密钥
-  expiration: 604800 #JWT的超期限时间(60*60*24*7)
-  tokenHead: 'Bearer '  #JWT负载中拿到开头
+  tokenHeader: Authorization  # JWT存储的请求头
+  secret: mall-portal-secret  # JWT加解密使用的密钥
+  expiration: 604800          # JWT的超期限时间(60*60*24*7)
+  tokenHead: 'Bearer '        # JWT负载中拿到开头
+  refreshTime: 30             # token刷新时间(Minutes)
 
 secure:
   ignored:
-    urls: #安全路径白名单
+    urls: # 安全路径白名单
       - /swagger-ui/
       - /swagger-resources/**
       - /**/v2/api-docs

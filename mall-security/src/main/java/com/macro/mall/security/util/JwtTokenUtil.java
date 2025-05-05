@@ -35,6 +35,8 @@ public class JwtTokenUtil {
     private Long expiration;
     @Value("${jwt.tokenHead}")
     private String tokenHead;
+    @Value("${jwt.refreshTime}")
+    private Integer refreshTIme;
 
     /**
      * 根据负责生成JWT的token
@@ -144,7 +146,7 @@ public class JwtTokenUtil {
             return null;
         }
         // 如果token在30分钟之内刚刷新过，返回原token
-        if (tokenRefreshJustBefore(token, 30 * 60)) {
+        if (tokenRefreshJustBefore(token, refreshTIme * 60)) {
             return token;
         } else {
             claims.put(CLAIM_KEY_CREATED, new Date());
@@ -163,9 +165,6 @@ public class JwtTokenUtil {
         Date created = claims.get(CLAIM_KEY_CREATED, Date.class);
         Date refreshDate = new Date();
         // 刷新时间在创建时间的指定时间内
-        if (refreshDate.after(created) && refreshDate.before(DateUtil.offsetSecond(created, time))) {
-            return true;
-        }
-        return false;
+        return refreshDate.after(created) && refreshDate.before(DateUtil.offsetSecond(created, time));
     }
 }

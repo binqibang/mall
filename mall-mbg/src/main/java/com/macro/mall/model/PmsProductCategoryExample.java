@@ -1,8 +1,12 @@
 package com.macro.mall.model;
 
+import lombok.Data;
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 public class PmsProductCategoryExample {
     protected String orderByClause;
 
@@ -12,26 +16,6 @@ public class PmsProductCategoryExample {
 
     public PmsProductCategoryExample() {
         oredCriteria = new ArrayList<>();
-    }
-
-    public void setOrderByClause(String orderByClause) {
-        this.orderByClause = orderByClause;
-    }
-
-    public String getOrderByClause() {
-        return orderByClause;
-    }
-
-    public void setDistinct(boolean distinct) {
-        this.distinct = distinct;
-    }
-
-    public boolean isDistinct() {
-        return distinct;
-    }
-
-    public List<Criteria> getOredCriteria() {
-        return oredCriteria;
     }
 
     public void or(Criteria criteria) {
@@ -46,15 +30,14 @@ public class PmsProductCategoryExample {
 
     public Criteria createCriteria() {
         Criteria criteria = createCriteriaInternal();
-        if (oredCriteria.size() == 0) {
+        if (oredCriteria.isEmpty()) {
             oredCriteria.add(criteria);
         }
         return criteria;
     }
 
     protected Criteria createCriteriaInternal() {
-        Criteria criteria = new Criteria();
-        return criteria;
+        return new Criteria();
     }
 
     public void clear() {
@@ -63,6 +46,8 @@ public class PmsProductCategoryExample {
         distinct = false;
     }
 
+    @SuppressWarnings("unused")
+    @Getter
     protected abstract static class GeneratedCriteria {
         protected List<Criterion> criteria;
 
@@ -72,14 +57,10 @@ public class PmsProductCategoryExample {
         }
 
         public boolean isValid() {
-            return criteria.size() > 0;
+            return !criteria.isEmpty();
         }
 
         public List<Criterion> getAllCriteria() {
-            return criteria;
-        }
-
-        public List<Criterion> getCriteria() {
             return criteria;
         }
 
@@ -811,6 +792,7 @@ public class PmsProductCategoryExample {
         }
     }
 
+    @Getter
     public static class Criterion {
         private String condition;
 
@@ -827,38 +809,6 @@ public class PmsProductCategoryExample {
         private boolean listValue;
 
         private String typeHandler;
-
-        public String getCondition() {
-            return condition;
-        }
-
-        public Object getValue() {
-            return value;
-        }
-
-        public Object getSecondValue() {
-            return secondValue;
-        }
-
-        public boolean isNoValue() {
-            return noValue;
-        }
-
-        public boolean isSingleValue() {
-            return singleValue;
-        }
-
-        public boolean isBetweenValue() {
-            return betweenValue;
-        }
-
-        public boolean isListValue() {
-            return listValue;
-        }
-
-        public String getTypeHandler() {
-            return typeHandler;
-        }
 
         protected Criterion(String condition) {
             super();
