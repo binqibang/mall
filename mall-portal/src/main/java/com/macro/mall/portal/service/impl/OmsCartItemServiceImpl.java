@@ -34,6 +34,8 @@ public class OmsCartItemServiceImpl implements OmsCartItemService {
     private OmsPromotionService promotionService;
     @Autowired
     private UmsMemberService memberService;
+    @Autowired
+    private OmsCartItemService selfProxy;
 
     @Override
     public int add(OmsCartItem cartItem) {
@@ -117,14 +119,14 @@ public class OmsCartItemServiceImpl implements OmsCartItemService {
 
     @Override
     public int updateAttr(OmsCartItem cartItem) {
-        //删除原购物车信息
+        // 删除原购物车信息
         OmsCartItem updateCart = new OmsCartItem();
         updateCart.setId(cartItem.getId());
         updateCart.setModifyDate(new Date());
         updateCart.setDeleteStatus(1);
         cartItemMapper.updateByPrimaryKeySelective(updateCart);
         cartItem.setId(null);
-        add(cartItem);
+        selfProxy.add(cartItem);
         return 1;
     }
 
