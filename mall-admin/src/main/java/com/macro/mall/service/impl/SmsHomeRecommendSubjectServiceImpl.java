@@ -19,6 +19,7 @@ import java.util.List;
 public class SmsHomeRecommendSubjectServiceImpl implements SmsHomeRecommendSubjectService {
     @Autowired
     private SmsHomeRecommendSubjectMapper smsHomeRecommendSubjectMapper;
+
     @Override
     public int create(List<SmsHomeRecommendSubject> recommendSubjectList) {
         for (SmsHomeRecommendSubject recommendSubject : recommendSubjectList) {
@@ -50,18 +51,18 @@ public class SmsHomeRecommendSubjectServiceImpl implements SmsHomeRecommendSubje
         example.createCriteria().andIdIn(ids);
         SmsHomeRecommendSubject record = new SmsHomeRecommendSubject();
         record.setRecommendStatus(recommendStatus);
-        return smsHomeRecommendSubjectMapper.updateByExampleSelective(record,example);
+        return smsHomeRecommendSubjectMapper.updateByExampleSelective(record, example);
     }
 
     @Override
     public List<SmsHomeRecommendSubject> list(String subjectName, Integer recommendStatus, Integer pageSize, Integer pageNum) {
-        PageHelper.startPage(pageNum,pageSize);
+        PageHelper.startPage(pageNum, pageSize);
         SmsHomeRecommendSubjectExample example = new SmsHomeRecommendSubjectExample();
         SmsHomeRecommendSubjectExample.Criteria criteria = example.createCriteria();
-        if(!StrUtil.isEmpty(subjectName)){
-            criteria.andSubjectNameLike("%"+subjectName+"%");
+        if (!StrUtil.isEmpty(subjectName)) {
+            criteria.andSubjectNameLike("%" + subjectName + "%");
         }
-        if(recommendStatus!=null){
+        if (recommendStatus != null) {
             criteria.andRecommendStatusEqualTo(recommendStatus);
         }
         example.setOrderByClause("sort desc");

@@ -42,18 +42,18 @@ public class MinioController {
     @ApiOperation("文件上传")
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult upload(@RequestPart("file") MultipartFile file) {
+    public CommonResult<MinioUploadDto> upload(@RequestPart("file") MultipartFile file) {
         try {
-            //创建一个MinIO的Java客户端
-            MinioClient minioClient =MinioClient.builder()
+            // 创建一个MinIO的Java客户端
+            MinioClient minioClient = MinioClient.builder()
                     .endpoint(ENDPOINT)
-                    .credentials(ACCESS_KEY,SECRET_KEY)
+                    .credentials(ACCESS_KEY, SECRET_KEY)
                     .build();
             boolean isExist = minioClient.bucketExists(BucketExistsArgs.builder().bucket(BUCKET_NAME).build());
             if (isExist) {
                 LOGGER.info("存储桶已经存在！");
             } else {
-                //创建存储桶并设置只读权限
+                // 创建存储桶并设置只读权限
                 minioClient.makeBucket(MakeBucketArgs.builder().bucket(BUCKET_NAME).build());
                 BucketPolicyConfigDto bucketPolicyConfigDto = createBucketPolicyConfigDto(BUCKET_NAME);
                 SetBucketPolicyArgs setBucketPolicyArgs = SetBucketPolicyArgs.builder()
@@ -79,7 +79,6 @@ public class MinioController {
             minioUploadDto.setUrl(ENDPOINT + "/" + BUCKET_NAME + "/" + objectName);
             return CommonResult.success(minioUploadDto);
         } catch (Exception e) {
-            e.printStackTrace();
             LOGGER.info("上传发生错误: {}！", e.getMessage());
         }
         return CommonResult.failed();
@@ -93,7 +92,7 @@ public class MinioController {
                 .Effect("Allow")
                 .Principal("*")
                 .Action("s3:GetObject")
-                .Resource("arn:aws:s3:::"+bucketName+"/*.**").build();
+                .Resource("arn:aws:s3:::" + bucketName + "/*.**").build();
         return BucketPolicyConfigDto.builder()
                 .Version("2012-10-17")
                 .Statement(CollUtil.toList(statement))
@@ -103,16 +102,16 @@ public class MinioController {
     @ApiOperation("文件删除")
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult delete(@RequestParam("objectName") String objectName) {
+    public CommonResult<Integer> delete(@RequestParam("objectName") String objectName) {
         try {
             MinioClient minioClient = MinioClient.builder()
                     .endpoint(ENDPOINT)
-                    .credentials(ACCESS_KEY,SECRET_KEY)
+                    .credentials(ACCESS_KEY, SECRET_KEY)
                     .build();
             minioClient.removeObject(RemoveObjectArgs.builder().bucket(BUCKET_NAME).object(objectName).build());
             return CommonResult.success(null);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.info("删除发生错误: {}！", e.getMessage());
         }
         return CommonResult.failed();
     }

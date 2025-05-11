@@ -15,21 +15,21 @@ import java.util.stream.Collectors;
  * Created by macro on 2018/4/26.
  */
 public class AdminUserDetails implements UserDetails {
-    //后台用户
+    // 后台用户
     private final UmsAdmin umsAdmin;
-    //拥有资源列表
+    // 拥有资源列表
     private final List<UmsResource> resourceList;
 
-    public AdminUserDetails(UmsAdmin umsAdmin,List<UmsResource> resourceList) {
+    public AdminUserDetails(UmsAdmin umsAdmin, List<UmsResource> resourceList) {
         this.umsAdmin = umsAdmin;
         this.resourceList = resourceList;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        //返回当前用户所拥有的资源
+        // 返回当前用户所拥有的资源
         return resourceList.stream()
-                .map(resource ->new SimpleGrantedAuthority(resource.getId()+":"+resource.getName()))
+                .map(resource -> new SimpleGrantedAuthority(resource.getId() + ":" + resource.getName()))
                 .collect(Collectors.toList());
     }
 

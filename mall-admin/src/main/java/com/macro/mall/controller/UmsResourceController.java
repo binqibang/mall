@@ -32,7 +32,7 @@ public class UmsResourceController {
     @ApiOperation("添加后台资源")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult create(@RequestBody UmsResource umsResource) {
+    public CommonResult<Integer> create(@RequestBody UmsResource umsResource) {
         int count = resourceService.create(umsResource);
         dynamicSecurityMetadataSource.clearDataSource();
         if (count > 0) {
@@ -45,8 +45,8 @@ public class UmsResourceController {
     @ApiOperation("修改后台资源")
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult update(@PathVariable Long id,
-                               @RequestBody UmsResource umsResource) {
+    public CommonResult<Integer> update(@PathVariable Long id,
+                                        @RequestBody UmsResource umsResource) {
         int count = resourceService.update(id, umsResource);
         dynamicSecurityMetadataSource.clearDataSource();
         if (count > 0) {
@@ -67,7 +67,7 @@ public class UmsResourceController {
     @ApiOperation("根据ID删除后台资源")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult delete(@PathVariable Long id) {
+    public CommonResult<Integer> delete(@PathVariable Long id) {
         int count = resourceService.delete(id);
         dynamicSecurityMetadataSource.clearDataSource();
         if (count > 0) {
@@ -85,7 +85,7 @@ public class UmsResourceController {
                                                       @RequestParam(required = false) String urlKeyword,
                                                       @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
                                                       @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
-        List<UmsResource> resourceList = resourceService.list(categoryId,nameKeyword, urlKeyword, pageSize, pageNum);
+        List<UmsResource> resourceList = resourceService.list(categoryId, nameKeyword, urlKeyword, pageSize, pageNum);
         return CommonResult.success(CommonPage.restPage(resourceList));
     }
 

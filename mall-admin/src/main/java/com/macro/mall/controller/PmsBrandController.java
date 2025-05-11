@@ -37,36 +37,32 @@ public class PmsBrandController {
     @ApiOperation(value = "添加品牌")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult create(@Validated @RequestBody PmsBrandParam pmsBrand) {
-        CommonResult commonResult;
+    public CommonResult<Integer> create(@Validated @RequestBody PmsBrandParam pmsBrand) {
         int count = brandService.createBrand(pmsBrand);
         if (count == 1) {
-            commonResult = CommonResult.success(count);
+            return CommonResult.success(count);
         } else {
-            commonResult = CommonResult.failed();
+            return CommonResult.failed();
         }
-        return commonResult;
     }
 
     @ApiOperation(value = "更新品牌")
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult update(@PathVariable("id") Long id,
-                               @Validated @RequestBody PmsBrandParam pmsBrandParam) {
-        CommonResult commonResult;
+    public CommonResult<Integer> update(@PathVariable("id") Long id,
+                                        @Validated @RequestBody PmsBrandParam pmsBrandParam) {
         int count = brandService.updateBrand(id, pmsBrandParam);
         if (count == 1) {
-            commonResult = CommonResult.success(count);
+            return CommonResult.success(count);
         } else {
-            commonResult = CommonResult.failed();
+            return CommonResult.failed();
         }
-        return commonResult;
     }
 
     @ApiOperation(value = "删除品牌")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult delete(@PathVariable("id") Long id) {
+    public CommonResult<Integer> delete(@PathVariable("id") Long id) {
         int count = brandService.deleteBrand(id);
         if (count == 1) {
             return CommonResult.success(null);
@@ -79,10 +75,10 @@ public class PmsBrandController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
     public CommonResult<CommonPage<PmsBrand>> getList(@RequestParam(value = "keyword", required = false) String keyword,
-                                                      @RequestParam(value = "showStatus",required = false) Integer showStatus,
+                                                      @RequestParam(value = "showStatus", required = false) Integer showStatus,
                                                       @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                                       @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize) {
-        List<PmsBrand> brandList = brandService.listBrand(keyword,showStatus,pageNum, pageSize);
+        List<PmsBrand> brandList = brandService.listBrand(keyword, showStatus, pageNum, pageSize);
         return CommonResult.success(CommonPage.restPage(brandList));
     }
 
@@ -96,7 +92,7 @@ public class PmsBrandController {
     @ApiOperation(value = "批量删除品牌")
     @RequestMapping(value = "/delete/batch", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult deleteBatch(@RequestParam("ids") List<Long> ids) {
+    public CommonResult<Integer> deleteBatch(@RequestParam("ids") List<Long> ids) {
         int count = brandService.deleteBrand(ids);
         if (count > 0) {
             return CommonResult.success(count);
@@ -108,8 +104,8 @@ public class PmsBrandController {
     @ApiOperation(value = "批量更新显示状态")
     @RequestMapping(value = "/update/showStatus", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult updateShowStatus(@RequestParam("ids") List<Long> ids,
-                                   @RequestParam("showStatus") Integer showStatus) {
+    public CommonResult<Integer> updateShowStatus(@RequestParam("ids") List<Long> ids,
+                                                  @RequestParam("showStatus") Integer showStatus) {
         int count = brandService.updateShowStatus(ids, showStatus);
         if (count > 0) {
             return CommonResult.success(count);
@@ -121,8 +117,8 @@ public class PmsBrandController {
     @ApiOperation(value = "批量更新厂家制造商状态")
     @RequestMapping(value = "/update/factoryStatus", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult updateFactoryStatus(@RequestParam("ids") List<Long> ids,
-                                      @RequestParam("factoryStatus") Integer factoryStatus) {
+    public CommonResult<Integer> updateFactoryStatus(@RequestParam("ids") List<Long> ids,
+                                                     @RequestParam("factoryStatus") Integer factoryStatus) {
         int count = brandService.updateFactoryStatus(ids, factoryStatus);
         if (count > 0) {
             return CommonResult.success(count);

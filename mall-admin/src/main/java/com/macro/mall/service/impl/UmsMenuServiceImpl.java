@@ -34,10 +34,10 @@ public class UmsMenuServiceImpl implements UmsMenuService {
      */
     private void updateLevel(UmsMenu umsMenu) {
         if (umsMenu.getParentId() == 0) {
-            //没有父菜单时为一级菜单
+            // 没有父菜单时为一级菜单
             umsMenu.setLevel(0);
         } else {
-            //有父菜单时选择根据父菜单level设置
+            // 有父菜单时选择根据父菜单level设置
             UmsMenu parentMenu = menuMapper.selectByPrimaryKey(umsMenu.getParentId());
             if (parentMenu != null) {
                 umsMenu.setLevel(parentMenu.getLevel() + 1);
@@ -76,11 +76,10 @@ public class UmsMenuServiceImpl implements UmsMenuService {
     @Override
     public List<UmsMenuNode> treeList() {
         List<UmsMenu> menuList = menuMapper.selectByExample(new UmsMenuExample());
-        List<UmsMenuNode> result = menuList.stream()
+        return menuList.stream()
                 .filter(menu -> menu.getParentId().equals(0L))
                 .map(menu -> covertMenuNode(menu, menuList))
                 .collect(Collectors.toList());
-        return result;
     }
 
     @Override
